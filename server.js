@@ -1,18 +1,21 @@
 const express = require('express');
 const routes = require('./routes')
-const path = require('path');
+// const registerRoute = require('./routes');
+// const loginRoute = require('./routes');
+
+
 const port = 3000;
-
-
 const app = express();
 
-// app.get('/', (req, res) => {
-//     res.send('Hello World!');
-// });
+
 app.use(express.static('public'))
 
+require('./config/mongoose')
 require('./config/express')(app)
+
 app.use(routes)
+// app.use('/register', registerRoute);
+// app.use('/login', loginRoute);
 
 
 app.listen(port, () => {
