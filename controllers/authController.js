@@ -14,11 +14,10 @@ router.get('/login', (req, res) => {
 
 router.post('/login', (req, res, next) => {
     const { username, password } = req.body
-    console.log(username);
-    console.log(password);
+
     authService.login(username, password)
         .then(token => {
-            // console.log(token);
+            console.log(token);
             res.cookie(COOKIE_NAME, token, { httpOnly: true })
             res.redirect('/')
         })
@@ -65,5 +64,10 @@ router.post('/register', async (req, res) => {
 
 })
 
+
+router.get('/logout', (req, res) => {
+    res.clearCookie(COOKIE_NAME);
+    res.redirect('/')
+})
 
 module.exports = router;

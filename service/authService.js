@@ -1,14 +1,12 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { SECRET } = require('../config/config')
+const { SECRET, token } = require('../config/config')
 
 const register = (username, password) => {
 
     let user = new User({ username, password })
-
     return user.save()
-
 }
 
 
@@ -27,8 +25,20 @@ const login = async (username, password) => {
     return token;
 }
 
+const authenticate = (token) => {
+
+    try {
+        return jwt.verify(token, SECRET)
+    }
+    catch (err) {
+        return null
+    }
+}
+
+
 
 module.exports = {
     register,
     login,
+    authenticate
 }
