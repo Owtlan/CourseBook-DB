@@ -1,11 +1,12 @@
 const router = require('express').Router()
 const User = require('../models/User');
 
-
 const bcrypt = require('bcrypt')
 const authService = require('../service/authService')
 const { COOKIE_NAME } = require('../config/config')
 // const bcrypt = require('bcrypt');
+
+
 
 router.get('/login', (req, res) => {
     res.render('login'); // 'register' трябва да съответства на името на вашия .hbs файл без разширение
@@ -17,9 +18,11 @@ router.post('/login', (req, res, next) => {
 
     authService.login(username, password)
         .then(token => {
-            console.log(token);
+            // console.log(token);
             res.cookie(COOKIE_NAME, token, { httpOnly: true })
             res.redirect('/')
+
+           
         })
         .catch(err => {
             console.log(err);

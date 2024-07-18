@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/styles.css">
-   <title>{{title}}</title>
+    <title>{{title}}</title>
 </head>
 
 <body>
@@ -19,18 +19,22 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="#">All Courses</a></li>
                 <!--For guest users-->
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
-                <!--For loggin users-->
+                {{#if token}}
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Create Course Offers</a></li>
                 <li><a href="/logout">Logout</a></li>
+
+                {{else}}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
+                <!--For loggin users-->
+                {{/if}}
 
             </ul>
         </nav>
     </div>
 
- {{{body}}}
+    {{{body}}}
 </body>
 
 

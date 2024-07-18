@@ -1,7 +1,9 @@
 const express = require('express');
-
+const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars')
 
+
+const auth = require('../middleware/auth')
 
 
 module.exports = function (app) {
@@ -16,4 +18,7 @@ module.exports = function (app) {
 
     app.use(express.urlencoded({ extended: true }))
 
+    // 1. Parse the Cookie in Your Express App
+    app.use(cookieParser())
+    app.use(auth)
 }
