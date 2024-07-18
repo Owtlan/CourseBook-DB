@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const User = require('../models/User');
+const { User } = require('../models/User');
+
 
 const bcrypt = require('bcrypt')
 const authService = require('../service/authService')
@@ -18,11 +19,11 @@ router.post('/login', (req, res, next) => {
 
     authService.login(username, password)
         .then(token => {
-            // console.log(token);
+            console.log(token);
             res.cookie(COOKIE_NAME, token, { httpOnly: true })
             res.redirect('/')
 
-           
+            return token
         })
         .catch(err => {
             console.log(err);

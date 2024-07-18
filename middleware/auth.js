@@ -7,11 +7,13 @@ const auth = (req, res, next) => {
     if (token) {
         const userData = authService.authenticate(token)
         if (userData) {
-            req.user = userData;
-            res.locals.token = token; // Pass token to Handlebars
-            res.locals.user = userData; // Pass user data to Handlebars
+            res.locals.isAuthenticated = true;
+            res.locals.user = userData;
         }
+    } else {
+        res.locals.isAuthenticated = false;
     }
+
     next()
 }
 

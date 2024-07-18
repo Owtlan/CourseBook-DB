@@ -18,15 +18,16 @@
                 <!-- Guest users and Logged users -->
                 <li><a href="/">Home</a></li>
                 <li><a href="#">All Courses</a></li>
+
                 <!--For guest users-->
-                {{#if token}}
+                {{#if isAuthenticated}}
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Create Course Offers</a></li>
                 <li><a href="/logout">Logout</a></li>
 
                 {{else}}
-                <li><a href="/login">Login</a></li>
-                <li><a href="/register">Register</a></li>
+                <li><a href="/auth/login">Login</a></li>
+                <li><a href="/auth/register">Register</a></li>
                 <!--For loggin users-->
                 {{/if}}
 
@@ -35,6 +36,8 @@
     </div>
 
     {{{body}}}
+
+    {{!-- show courses... --}}
 </body>
 
 
