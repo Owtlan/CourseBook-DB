@@ -2,8 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const { engine } = require('express-handlebars')
 
-
-const auth = require('../middleware/auth')
+const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
 module.exports = function (app) {

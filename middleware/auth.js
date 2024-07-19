@@ -17,4 +17,14 @@ const auth = (req, res, next) => {
     next()
 }
 
-module.exports = auth
+
+function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated && req.isAuthenticated()) {
+        return res.redirect('/');
+    }
+    next();
+}
+module.exports = {
+    auth,
+    checkNotAuthenticated,
+};
