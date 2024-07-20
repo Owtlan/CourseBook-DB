@@ -13,7 +13,6 @@ router.get('/course', auth, (req, res) => {
 
 // Handle course creation
 
-//////
 router.post('/create', auth, async (req, res) => {
     const { title, type, certificate, image, description, price } = req.body;
     const owner = res.locals.user._id

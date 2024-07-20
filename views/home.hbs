@@ -1,5 +1,6 @@
 <main>
     <div class="container">
+        
         <div class="course-message">
             <h1 id="site-title">Course Book</h1>
             <h2 id="site-mid-title">Show your opportunities!</h2>
@@ -15,15 +16,14 @@
 
                 <article class="all-course-card-image">
                     <!-- Do not forget to change the path to the image -->
-                    <img src="{{this.image}}">
+                    <img src="{{this.image}}" alt="{{this.title}} image">
                 </article>
 
                 <article class="all-course-card-content">
                     <!--You must put the headline value in <h2>-->
-                    <h2>Spanish 1-4: {{this.title}}</h2>
-                    <!--You must put the headline value in <h3>-->
+                    <h2>{{this.title}}</h2>
                     <h3>Type: {{this.type}}</h3>
-                    <h3>Price: {{this.price}}</h3>
+                    <h3>Price: ${{this.price}}</h3>
                 </article>
 
                 <article class="all-course-card-buttons">
