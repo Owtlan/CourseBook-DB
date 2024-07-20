@@ -25,7 +25,7 @@ router.post('/create', auth, async (req, res) => {
     try {
         const course = new Course({ title, type, certificate, image, description, price, owner })
         await course.save()
-        res.redirect('/course')
+        res.redirect('/')
     } catch (error) {
         res.render('course', { errorMessage: 'Error creating course', data: req.body });
     }
