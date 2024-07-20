@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { User } = require('../models/User');
+const { User, Course } = require('../models/User');
 
 
 const bcrypt = require('bcrypt')
@@ -9,7 +9,6 @@ const { COOKIE_NAME } = require('../config/config')
 // da proverim authenticiran li e
 
 const { auth, checkNotAuthenticated } = require('../middleware/auth');
-
 
 
 router.get('/login', (req, res) => {
@@ -37,7 +36,19 @@ router.post('/login', async (req, res, next) => {
         });
     }
 
+    // authService.login(username, password)
+    //     .then(token => {
+    //         console.log(token);
+    //         res.cookie(COOKIE_NAME, token, { httpOnly: true })
+    //         res.redirect('/')
 
+    //         return token
+    //     })
+    //     .catch(err => {
+    //         console.log('User already exists:', username, password);
+    //         res.redirect('/login')
+    //         next(err)
+    //     })
 })
 
 

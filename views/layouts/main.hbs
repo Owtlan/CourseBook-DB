@@ -16,12 +16,12 @@
             <ul>
                 <!-- Guest users and Logged users -->
                 <li><a href="/">Home</a></li>
-                <li><a href="#">All Courses</a></li>
+                <li><a href="/catalog">All Courses</a></li>
 
                 <!--For guest users-->
                 {{#if isAuthenticated}}
                 <li><a href="#">Profile</a></li>
-                <li><a href="#">Create Course Offers</a></li>
+                <li><a href="/course/create">Create Course Offers</a></li>
                 <li><a href="/logout">Logout</a></li>
 
                 {{else}}

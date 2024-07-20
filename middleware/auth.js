@@ -9,6 +9,8 @@ const auth = (req, res, next) => {
         if (userData) {
             res.locals.isAuthenticated = true;
             res.locals.user = userData;
+        } else {
+            res.locals.isAuthenticated = false;
         }
     } else {
         res.locals.isAuthenticated = false;

@@ -1,0 +1,33 @@
+<main>
+    <section id="create-container">
+        <div class="create-container-info">
+            <h1>Create Course</h1>
+            {{#if errorMessage}}
+            <div class="error-message">{{errorMessage}}</div>
+            {{/if}}
+            <form action="/course/create" method="POST">
+                <label>Title:</label>
+                <input name="title" type="text" id="title" value="{{data.title}}">
+
+                <label>Type:</label>
+                <input name="type" type="text" id="type" value="{{data.type}}">
+
+                <label>Certificate:</label>
+                <input name="certificate" type="text" id="certificate" value="{{data.certificate}}">
+
+                <label>Image:</label>
+                <input name="image" type="text" id="image" placeholder="http://..." value="{{data.image}}">
+
+                <label>Description:</label>
+                <textarea id="description" name="description">{{data.description}}</textarea>
+
+                <label>Price:</label>
+                <input name="price" type="number" id="price" value="{{data.price}}">
+
+                <input type="submit" id="btn" value="Create">
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer>Back-End 2023</footer>

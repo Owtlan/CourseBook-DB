@@ -18,7 +18,7 @@ require('./config/express')(app)
 
 app.use(routes)
 
-app.use('/auth', authRouter);
+// app.use('/auth', authRouter);
 
 app.listen(port, () => {
     console.log(`server is running at ${port}`);
