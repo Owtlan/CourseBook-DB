@@ -1,4 +1,5 @@
-const router = require('express').Router()
+const express = require('express');
+const router = express.Router();
 
 const homeController = require('./controllers/homeController')
 const authController = require('./controllers/authController')
@@ -14,15 +15,8 @@ const { Course } = require('./models/User');
 router.get('/', async (req, res) => {
     try {
 
-        const courses = await Course.find()
-            .sort({ createdAt: -1 })
-            .limit(3)
-
-        res.render('home', {
-            title: 'Your Title Here',
-            courses: courses,
-            token: req.token,
-        })
+        const courses = await Course.find().populate('owner signUpList').lean().limit(3);
+        res.render('home', { courses });
     } catch (err) {
         console.error(err);
         // Handle error rendering or fetching courses

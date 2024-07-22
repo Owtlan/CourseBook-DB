@@ -2,9 +2,6 @@ const router = require('express').Router()
 const { User, Course } = require('../models/User');
 const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
-// da proverim authenticiran li e
-
-
 
 router.get('/course', auth, (req, res) => {
     res.render('course', { user: res.locals.user });
@@ -18,6 +15,7 @@ router.post('/create', auth, async (req, res) => {
     const owner = res.locals.user._id
 
     if (!title || !type || !certificate || !image || !description || !price) {
+        console.log(type);
         return res.render('course', { errorMessage: 'All fields are required', data: req.body })
     }
 
@@ -36,12 +34,14 @@ router.get('/create', auth, (req, res) => {
     res.render('course', { user: res.locals.user });
 });
 
-router.get('/', async (req, res) => {
-
+router.get('/home', async (req, res) => {
+ 
     try {
-        const courses = await Courses.find().sort({ createdAt: -1 })
-        res.render('courses', { courses })
+        const courses = await Course.find().sort({ createdAt: -1 })
+
+        res.render('home', { courses })
     } catch (error) {
+        console.error(error); // Log any errors
         res.status(500).send('Internal Server Error')
     }
 });
