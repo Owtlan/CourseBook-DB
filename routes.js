@@ -6,11 +6,6 @@ const authController = require('./controllers/authController')
 const courseController = require('./controllers/courseController'); // Add courseController
 
 const { Course } = require('./models/User');
-// const auth = require('./middleware/auth')
-
-
-// router.use(auth)
-
 
 router.get('/', async (req, res) => {
     try {
@@ -23,11 +18,11 @@ router.get('/', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 
-
 })
 
 
-router.use('/', homeController)
+
 router.use('/course', courseController);
+router.use('/', homeController)
 router.use('/', authController)
 module.exports = router
