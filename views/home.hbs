@@ -7,7 +7,28 @@
         </div>
        {{!-- here i need to put application pages--}}
 
- 
+    {{!-- Check if there are courses --}}
+        {{#if courses.length}}
+            {{!-- Loop through each course and display its information --}}
+            {{#each courses}}
+            <div class="last-course">
+                <div class="info">
+                    <h2 class="title">{{this.title}}</h2>
+                    <h4 class="genre">Type: {{this.type}}</h4>
+                    <h4 class="certificate">Certificate: {{this.certificate}}</h4>
+                    <h4 class="price">Price: €{{this.price}}</h4>
+                    <div class="learn-more">
+                        <a href="/course/details/{{this._id}}">Learn More...</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        {{else}}
+            <!-- If there are still no course posts in the database -->
+            <article class="not-available-course">
+                <h1>No course created yet.</h1>
+            </article>
+        {{/if}}
 </main>
 
 <footer>Back-End 2023</footer>

@@ -10,7 +10,9 @@ const { Course } = require('./models/User');
 router.get('/', async (req, res) => {
     try {
 
-        const courses = await Course.find().populate('owner signUpList').lean().limit(3);
+        // const courses = await Course.find().populate('owner signUpList').lean().limit(3);
+        const courses = await Course.find().sort({ createdAt: -1 }).limit(3).lean();
+
         res.render('home', { courses });
     } catch (err) {
         console.error(err);

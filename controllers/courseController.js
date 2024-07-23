@@ -38,7 +38,7 @@ router.post('/create', auth, async (req, res) => {
 
     if (!title || !type || !certificate || !image || !description || !price) {
         console.log(type);
-        return res.render('course', { errorMessage: 'All fields are required', data: req.body })
+        return res.render('createCourse', { errorMessage: 'All fields are required', data: req.body })
     }
 
     try {
@@ -46,13 +46,10 @@ router.post('/create', auth, async (req, res) => {
         await course.save()
         res.redirect('/')
     } catch (error) {
-        res.render('course', { errorMessage: 'Error creating course', data: req.body });
+        res.render('createCourse', { errorMessage: 'Error creating course', data: req.body });
     }
 });
 
-// List courses
-// Render the course creation page
-/// ako imam problem s suzdavaneto na kursa ot tuka e
 router.get('/create', auth, (req, res) => {
     res.render('createCourse', { user: res.locals.user });
 });
