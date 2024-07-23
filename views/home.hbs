@@ -5,40 +5,9 @@
             <h1 id="site-title">Course Book</h1>
             <h2 id="site-mid-title">Show your opportunities!</h2>
         </div>
-        {{#if courses.length}}
-        <section id="all-course-page">
-            <article class="all-course-title">
-                <h1>All Courses</h1>
-            </article>
-            {{#each courses}}
+       {{!-- here i need to put application pages--}}
 
-            <article class="all-course-card">
-
-                <article class="all-course-card-image">
-                    <!-- Do not forget to change the path to the image -->
-                    <img src="{{this.image}}" alt="{{this.title}} image">
-                </article>
-
-                <article class="all-course-card-content">
-                    <!--You must put the headline value in <h2>-->
-                    {{!-- need to takes datas from mongoDB --}}
-                    <h2>{{this.title}}</h2>
-                    <h3>Type: {{this.type}}</h3>
-                    <h3>Price: ${{this.price}}</h3>
-                </article>
-
-                <article class="all-course-card-buttons">
-                    <a href="/course/details/{{this._id}}" class="btn-details">Details</a>
-                </article>
-            </article>
-            {{/each}}
-            {{else}}
-            <!-- If there are still no course posts on the database -->
-            <article class="not-available-course">
-                <h1>No course created yet.</h1>
-            </article>
-            {{/if}}
-        </section>
+ 
 </main>
 
 <footer>Back-End 2023</footer>

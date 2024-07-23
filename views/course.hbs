@@ -1,33 +1,36 @@
 <main>
-    <section id="create-container">
-        <div class="create-container-info">
-            <h1>Create Course</h1>
-            {{#if errorMessage}}
-            <div class="error-message">{{errorMessage}}</div>
+     {{#if courses.length}}
+        <section id="all-course-page">
+            <article class="all-course-title">
+                <h1>All Courses</h1>
+            </article>
+            {{#each courses}}
+
+            <article class="all-course-card">
+
+                <article class="all-course-card-image">
+                    <!-- Do not forget to change the path to the image -->
+                    <img src="{{this.image}}" alt="{{this.title}} image">
+                </article>
+
+                <article class="all-course-card-content">
+                    <!--You must put the headline value in <h2>-->
+                    {{!-- need to takes datas from mongoDB --}}
+                    <h2>{{this.title}}</h2>
+                    <h3>Type: {{this.type}}</h3>
+                    <h3>Price: ${{this.price}}</h3>
+                </article>
+
+                <article class="all-course-card-buttons">
+                    <a href="/course/details/{{this._id}}" class="btn-details">Details</a>
+                </article>
+            </article>
+            {{/each}}
+            {{else}}
+            <!-- If there are still no course posts on the database -->
+            <article class="not-available-course">
+                <h1>No course created yet.</h1>
+            </article>
             {{/if}}
-            <form action="/course/create" method="POST">
-                <label>Title:</label>
-                <input name="title" type="text" id="title" value="{{data.title}}">
-
-                <label>Type:</label>
-                <input name="type" type="text" id="type" value="{{data.type}}">
-
-                <label>Certificate:</label>
-                <input name="certificate" type="text" id="certificate" value="{{data.certificate}}">
-
-                <label>Image:</label>
-                <input name="image" type="text" id="image" placeholder="http://..." value="{{data.image}}">
-
-                <label>Description:</label>
-                <textarea id="description" name="description">{{data.description}}</textarea>
-
-                <label>Price:</label>
-                <input name="price" type="number" id="price" value="{{data.price}}">
-
-                <input type="submit" id="btn" value="Create">
-            </form>
-        </div>
-    </section>
+        </section>
 </main>
-
-<footer>Back-End 2023</footer>

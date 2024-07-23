@@ -4,12 +4,18 @@ const { User, Course } = require('../models/User');
 const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
-// router.get('/course', auth, (req, res) => {
-//     res.render('course', { user: res.locals.user });
-// });
 
+router.get('/courses', async (req, res) => {
+    try {
+        const courses = await Course.find().lean();
+        res.render('course', { title: 'All Courses', courses });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
-router.get('/details/:id', auth, async (req, res) => {
+router.get('/course/details/:id', auth, async (req, res) => {
     try {
         // Find the course by ID and populate related fields
         const course = await Course.findById(req.params.id).populate('owner signUpList').lean();
@@ -23,13 +29,6 @@ router.get('/details/:id', auth, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
-
-
-
-
-
 
 // Handle course creation
 
@@ -53,8 +52,9 @@ router.post('/create', auth, async (req, res) => {
 
 // List courses
 // Render the course creation page
+/// ako imam problem s suzdavaneto na kursa ot tuka e
 router.get('/create', auth, (req, res) => {
-    res.render('course', { user: res.locals.user });
+    res.render('createCourse', { user: res.locals.user });
 });
 
 

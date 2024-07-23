@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
 
 
-router.use('/course', courseController);
+router.use('/', courseController);
 router.use('/', homeController)
 router.use('/', authController)
 module.exports = router
