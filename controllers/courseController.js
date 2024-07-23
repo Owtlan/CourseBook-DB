@@ -19,6 +19,7 @@ router.get('/course/details/:id', auth, async (req, res) => {
     try {
         // Find the course by ID and populate related fields
         const course = await Course.findById(req.params.id).populate('owner signUpList').lean();
+        
         if (!course) {
             return res.status(404).send('Course not found');
         }
@@ -30,9 +31,41 @@ router.get('/course/details/:id', auth, async (req, res) => {
     }
 });
 
+// add the singup route
+
+router.post('/course/signup/:id', auth, async (req, res) => {
+
+    try {
+        const courseId = req.params.id
+        const userId = res.locals.user._id
+
+        //find the course by ID
+        const course = await Course.findById(courseId)
+
+        if (!course) {
+            return res.status(404).send('Course not found')
+        }
+
+        // Check if the user is already signed up for the course
+        if (course.signUpList.includes(userId)) {
+            return res.status(400).send('You are already signed up for this course');
+        }
+
+        // Add the user to the sign-up list
+        course.signUpList.push(userId);
+        await course.save();
+
+        res.redirect(`/course/details/${courseId}`)
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+
+})
+
 // Handle course creation
 
-router.post('/create', auth, async (req, res) => {
+router.post('/course/create', auth, async (req, res) => {
     const { title, type, certificate, image, description, price } = req.body;
     const owner = res.locals.user._id
 
@@ -50,7 +83,7 @@ router.post('/create', auth, async (req, res) => {
     }
 });
 
-router.get('/create', auth, (req, res) => {
+router.get('/course/create', auth, (req, res) => {
     res.render('createCourse', { user: res.locals.user });
 });
 

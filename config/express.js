@@ -5,6 +5,7 @@ const { engine } = require('express-handlebars')
 const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
+
 module.exports = function (app) {
 
     app.engine('hbs', engine({
@@ -18,8 +19,10 @@ module.exports = function (app) {
                     return options.fn(this);
                 }
                 return options.inverse(this);
-            }
+            },
+        
         }
+
     }))
 
     app.set('view engine', 'hbs')
@@ -31,4 +34,7 @@ module.exports = function (app) {
     // 1. Parse the Cookie in Your Express App
     app.use(cookieParser())
     app.use(auth)
+
+
+
 }
