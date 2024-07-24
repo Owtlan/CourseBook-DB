@@ -14,12 +14,14 @@ module.exports = function (app) {
             ifEquals: function (arg1, arg2, options) {
                 return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
             },
-            unless: function (val, list, options) {
-                if (!list.includes(val)) {
-                    return options.fn(this);
-                }
-                return options.inverse(this);
-            },
+            // unless: function (val, list, options) {
+            //     if (!list.includes(val)) {
+            //         return options.fn(this);
+            //     }
+            //     return options.inverse(this);
+            // },
+       
+            
         }
     }))
 

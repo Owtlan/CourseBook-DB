@@ -24,10 +24,9 @@
             <a href="/course/edit/{{course._id}}">Edit</a>
             <a href="/course/delete/{{course._id}}">Delete</a>
             {{else}}
-            {{#unless user._id course.signUpList}}
+            {{#unless isEnrolled}}
             <form action="/course/signup/{{course._id}}" method="post">
                 <button type="submit">Sign up</button>
-                {{!-- <a href="/" type="submit">Sign up</a> --}}
             </form>
             {{else}}
             <p class="sign-up">You've already signed up for this course!</p>

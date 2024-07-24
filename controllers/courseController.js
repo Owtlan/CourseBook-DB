@@ -14,22 +14,37 @@ router.get('/courses', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 router.get('/course/details/:id', auth, async (req, res) => {
     try {
-        // Find the course by ID and populate related fields
+        // Намерете курса по ID и попълнете свързаните полета
         const course = await Course.findById(req.params.id).populate('owner signUpList').lean();
-        
+
         if (!course) {
             return res.status(404).send('Course not found');
         }
-        // Render the details view with the course data
-        res.render('details', { course, user: res.locals.user });
+
+        const userIdStr = res.locals.user._id.toString();
+        console.log('User ID from session:', userIdStr);
+
+        // Логване на signUpList
+        const signUpListIds = course.signUpList.map(id => id._id ? id._id.toString() : id.toString());
+        console.log('SignUpList IDs:', signUpListIds);
+
+
+        // Проверете дали потребителят е записан
+        const isEnrolled = signUpListIds.includes(userIdStr);
+        console.log('Is enrolled:', isEnrolled);
+
+
+        res.render('details', { course, user: res.locals.user, isEnrolled });
+
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
+
+
 
 // add the singup route
 
