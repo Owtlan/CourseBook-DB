@@ -11,7 +11,7 @@
             <h3>Price: €{{course.price}}</h3>
             <h3>By: {{course.owner.email}}</h3>
             {{#if course.signUpList.length}}
-            <h4>Signed By: {{#each course.signUpList}}{{this}}, {{/each}}</h4>
+            <h4>Signed By: {{#each course.signUpList}}{{this.username}} {{/each}}</h4>
             {{else}}
             <h4>Nobody has signed up for this course yet</h4>
             {{/if}}
@@ -25,8 +25,11 @@
             <a href="/course/edit/{{course._id}}">Edit</a>
             <a href="/course/delete/{{course._id}}">Delete</a>
             {{else}}
-            {{#unless user.email course.signUpList}}
-            <a href="/course/signup/{{course._id}}">Sign up</a>
+            {{#unless user._id course.signUpList}}
+            <form action="/course/signup/{{course._id}}" method="post">
+                <button type="submit">Sign up</button>
+                {{!-- <a href="/" type="submit">Sign up</a> --}}
+            </form>
             {{else}}
             <p class="sign-up">You've already signed up for this course!</p>
             {{/unless}}
@@ -69,7 +72,7 @@
             <a href="/course/edit/{{course._id}}">Edit</a>
             <a href="/course/delete/{{course._id}}">Delete</a>
             {{else}}
-          {{#unless (includes course.signUpList user._id)}}
+            {{#unless (includes course.signUpList user._id)}}
             <form action="/course/signup/{{course._id}}" method="POST">
                 <button type="submit">Sign up</button>
             </form>
@@ -83,4 +86,3 @@
 </main>
 
 <footer>Back-End 2023</footer> --}}
-

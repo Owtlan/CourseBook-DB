@@ -54,7 +54,7 @@
   margin-top: 10px;
 }
 
-.btn-container a {
+.btn-container button {
   text-decoration: none;
   color: white;
   font-size: 18px;
@@ -63,12 +63,15 @@
   padding: 15px;
   margin: 10px;
   background-color: #262322;
+
 }
 
 .btn-container {
   position: absolute;
   bottom: 50px;
   width: 100%;
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
 
