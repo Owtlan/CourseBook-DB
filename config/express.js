@@ -20,9 +20,7 @@ module.exports = function (app) {
                 }
                 return options.inverse(this);
             },
-        
         }
-
     }))
 
     app.set('view engine', 'hbs')
