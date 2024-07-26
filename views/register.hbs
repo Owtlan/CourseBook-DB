@@ -2,7 +2,9 @@
     <div class="register-box">
         <h1>Register</h1>
         {{#if errorMessage}}
-        <p style="color: red;">{{errorMessage}}</p>
+        <div class="errorContainer">
+            <p>{{errorMessage}}</p>
+        </div>
         {{/if}}
         <form action="/register" method="POST">
             <label>Username</label>

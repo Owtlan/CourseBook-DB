@@ -2,6 +2,11 @@
     <section id="edit-container">
         <div class="edit-container-info">
             <h1>Edit Course</h1>
+            {{#if errorMessage}}
+            <div class="errorContainer">
+                <p>{{errorMessage}}</p>
+            </div>
+            {{/if}}
             <form action="/course/edit/{{course._id}}" method="POST">
                 <label>Title:</label>
                 <input name="title" type="text" id="title" value="{{course.title}}" required>

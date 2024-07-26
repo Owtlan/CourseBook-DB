@@ -2,7 +2,9 @@
     <div class="login-box">
         <h1>Login</h1>
         {{#if errorMessage}}
-        <p style="color: red;">{{errorMessage}}</p>
+        <div class="errorContainer">
+            <p>{{errorMessage}}</p>
+        </div>
         {{/if}}
         <form action="/login" method="POST">
             <label>Email</label>

@@ -55,7 +55,29 @@ router.post('/course/edit/:id', auth, async (req, res) => {
         // Update the course with new data
         const { title, type, certificate, image, description, price } = req.body;
 
+        if (!title || title.length < 5) {
+            return res.render('edit', { errorMessage: 'Title must be at least 5 characters long.', course: req.body });
+        }
 
+        if (!type || type.length < 3) {
+            return res.render('edit', { errorMessage: 'Type must be at least 3 characters long.', course: req.body });
+        }
+
+        if (!certificate || certificate.length < 2) {
+            return res.render('edit', { errorMessage: 'Certificate must be at least 2 characters long.', course: req.body });
+        }
+
+        if (!image || !image.startsWith('http://') && !image.startsWith('https://')) {
+            return res.render('edit', { errorMessage: 'Image URL must start with http:// or https://.', course: req.body });
+        }
+
+        if (!description || description.length < 10) {
+            return res.render('edit', { errorMessage: 'Description must be at least 10 characters long.', course: req.body });
+        }
+
+        if (isNaN(price) || price <= 0) {
+            return res.render('edit', { errorMessage: 'Price must be a positive number.', course: req.body });
+        }
         // Simple validation
         if (!title || !type || !certificate || !image || !description || !price) {
             return res.render('edit', { errorMessage: 'All fields are required', course: req.body });
@@ -185,6 +207,29 @@ router.post('/course/create', auth, async (req, res) => {
     const { title, type, certificate, image, description, price } = req.body;
     const owner = res.locals.user._id
 
+    if (!title || title.length < 5) {
+        return res.render('createCourse', { errorMessage: 'Title must be at least 5 characters long.', data: req.body });
+    }
+
+    if (!type || type.length < 3) {
+        return res.render('createCourse', { errorMessage: 'Type must be at least 3 characters long.', data: req.body });
+    }
+
+    if (!certificate || certificate.length < 2) {
+        return res.render('createCourse', { errorMessage: 'Certificate must be at least 2 characters long.', data: req.body });
+    }
+
+    if (!image || !image.startsWith('http://') && !image.startsWith('https://')) {
+        return res.render('createCourse', { errorMessage: 'Image URL must start with http:// or https://.', data: req.body });
+    }
+
+    if (!description || description.length < 10) {
+        return res.render('createCourse', { errorMessage: 'Description must be at least 10 characters long.', data: req.body });
+    }
+    if (isNaN(price) || price <= 0) {
+        return res.render('createCourse', { errorMessage: 'Price must be a positive number.', data: req.body });
+    }
+
     if (!title || !type || !certificate || !image || !description || !price) {
         console.log(type);
         return res.render('createCourse', { errorMessage: 'All fields are required', data: req.body })
@@ -195,6 +240,7 @@ router.post('/course/create', auth, async (req, res) => {
         await course.save()
         res.redirect('/')
     } catch (error) {
+        console.error('Error creating course:', error);
         res.render('createCourse', { errorMessage: 'Error creating course', data: req.body });
     }
 });

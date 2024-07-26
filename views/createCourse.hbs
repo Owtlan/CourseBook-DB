@@ -2,8 +2,10 @@
     <section id="create-container">
         <div class="create-container-info">
             <h1>Create Course</h1>
-            {{#if errorMessage}}
-            <div class="error-message">{{errorMessage}}</div>
+          {{#if errorMessage}}
+            <div class="errorContainer">
+                <p>{{errorMessage}}</p>
+            </div>
             {{/if}}
             <form action="/course/create" method="POST">
                 <label>Title:</label>

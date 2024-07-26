@@ -9,17 +9,24 @@ const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { errorMessage: null });
 });
 
 
 router.post('/login', async (req, res, next) => {
     const { username, password } = req.body
 
+    // Simple validation
+    if (username.length < 2 || password.length < 4) {
+        return res.render('login', {
+            errorMessage: 'Invalid email or password',
+            username
+        });
+    }
 
     try {
         const token = await authService.login(username, password);
-        console.log(token);
+
         res.cookie(COOKIE_NAME, token, { httpOnly: true });
         res.redirect('/');
         return token
@@ -46,6 +53,15 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
 
     const { username, email, password, 'confirm-password': confirmPassword } = req.body;
 
+
+    if (username.length < 2 || email.length < 10 || password.length < 4) {
+        return res.status(400).render('register', {
+            errorMessage: 'Username must be at least 2 characters, email must be at least 10 characters, and password must be at least 4 characters long.',
+            username,
+            email
+        })
+    }
+
     if (password !== confirmPassword) {
         return res.status(400).render('register', {
             errorMessage: 'Passwords do not match.',
@@ -63,11 +79,11 @@ router.post('/register', checkNotAuthenticated, async (req, res) => {
 
         if (existingUser) {
             // Log the error or handle it as needed
-            console.log('User already exists:', username, email);
-
-            // Send the status code and redirect to the register page
-            res.status(400);
-            return res.redirect('/register');
+            return res.status(400).render('register', {
+                errorMessage: 'User already exists.',
+                username,
+                email
+            });;
         }
 
 
