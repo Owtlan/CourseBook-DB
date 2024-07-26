@@ -6,6 +6,79 @@ const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
 
+router.get('/course/edit/:id', auth, async (req, res) => {
+
+    try {
+        const courseId = req.params.id
+        const userId = res.locals.user._id
+
+        const course = await Course.findById(courseId).lean()
+
+
+        if (!course) {
+            return res.status(404).send('Course not found')
+        }
+
+        if (course.owner.toString() !== userId.toString()) {
+            return res.status(403).send('Unauthorized: You are not the owner of this course');
+        }
+
+        res.render('edit', { course, user: res.locals.user })
+
+    } catch (error) {
+        console.error('Error displaying edit form:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+})
+
+// here i have mistakes
+router.post('/course/edit/:id', auth, async (req, res) => {
+
+    try {
+        const courseId = req.params.id;
+        const userId = res.locals.user._id;
+
+        // Find the course by ID
+        const course = await Course.findById(courseId);
+
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+
+        // Check if the logged-in user is the owner of the course
+        if (course.owner.toString() !== userId.toString()) {
+            return res.status(403).send('Unauthorized: You are not the owner of this course');
+        }
+
+
+        // Update the course with new data
+        const { title, type, certificate, image, description, price } = req.body;
+
+
+        // Simple validation
+        if (!title || !type || !certificate || !image || !description || !price) {
+            return res.render('edit', { errorMessage: 'All fields are required', course: req.body });
+        }
+
+        course.title = title;
+        course.type = type;
+        course.certificate = certificate;
+        course.image = image;
+        course.description = description;
+        course.price = price;
+
+        await course.save();
+
+        res.redirect(`/course/details/${courseId}`);
+    } catch (error) {
+        console.error('Error updating course:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+})
+
+
 router.post('/course/delete/:id', auth, async (req, res) => {
     try {
         const courseId = req.params.id;
@@ -17,7 +90,7 @@ router.post('/course/delete/:id', auth, async (req, res) => {
         if (!course) {
             return res.status(404).send('Course not found');
         }
-      
+
         // Check if the logged-in user is the owner of the course
         if (course.owner.toString() !== userId.toString()) {
             return res.status(403).send('Unauthorized: You are not the owner of this course');
@@ -72,8 +145,6 @@ router.get('/course/details/:id', auth, async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
-
 
 // add the singup route
 

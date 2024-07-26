@@ -21,9 +21,9 @@
         <div class="btn-container">
             {{#if user}}
             {{#ifEquals user._id course.owner._id}}
-            <a href="/course/edit/{{course._id}}">Edit</a>
 
             <form action="/course/delete/{{course._id}}" method="post" style="display:inline;">
+                <a href="/course/edit/{{course._id}}">Edit</a>
                 <button type="submit">Delete</button>
             </form>
 

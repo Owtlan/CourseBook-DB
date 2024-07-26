@@ -1,0 +1,28 @@
+<main>
+    <section id="edit-container">
+        <div class="edit-container-info">
+            <h1>Edit Course</h1>
+            <form action="/course/edit/{{course._id}}" method="POST">
+                <label>Title:</label>
+                <input name="title" type="text" id="title" value="{{course.title}}" required>
+
+                <label>Type:</label>
+                <input name="type" type="text" id="type" value="{{course.type}}" required>
+
+                <label>Certificate:</label>
+                <input name="certificate" type="text" id="certificate" value="{{course.certificate}}" required>
+
+                <label>Image:</label>
+                <input name="image" type="text" id="image" placeholder="http://..." value="{{course.image}}" required>
+
+                <label>Description:</label>
+                <textarea id="content" name="description" required>{{course.description}}</textarea>
+
+                <label>Price:</label>
+                <input name="price" type="number" id="price" value="{{course.price}}" required>
+
+                <input type="submit" id="btn" value="Edit">
+            </form>
+        </div>
+    </section>
+</main>
