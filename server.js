@@ -17,6 +17,19 @@ app.use(express.static('public'))
 app.use(auth);
 app.use(routes)
 
+// 404 Handler: For any undefined routes
+app.use((req, res) => {
+    res.status(404).render('404');
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error');
+});
+
+
+
 require('./config/mongoose')
 require('./config/express')(app)
 

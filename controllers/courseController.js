@@ -116,7 +116,7 @@ router.get('/courses', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-router.get('/course/details/:id', auth, async (req, res) => {
+router.get('/course/details/:id', async (req, res) => {
     try {
         // Намерете курса по ID и попълнете свързаните полета
         const course = await Course.findById(req.params.id).populate('owner signUpList').lean();
@@ -124,21 +124,22 @@ router.get('/course/details/:id', auth, async (req, res) => {
         if (!course) {
             return res.status(404).send('Course not found');
         }
+        let isEnrolled = false;
+        let user = res.locals.user || null;
+        console.log(user);
 
-        const userIdStr = res.locals.user._id.toString();
-        console.log('User ID from session:', userIdStr);
+        if (user) {
+            const userIdStr = user._id.toString();
+            console.log('User ID from session:', userIdStr);
 
-        // Логване на signUpList
-        const signUpListIds = course.signUpList.map(id => id._id ? id._id.toString() : id.toString());
-        console.log('SignUpList IDs:', signUpListIds);
+            const signUpListIds = course.signUpList.map(id => id._id ? id._id.toString() : id.toString());
+            console.log('SignUpList IDs:', signUpListIds);
 
+            isEnrolled = signUpListIds.includes(userIdStr);
+            console.log('Is enrolled:', isEnrolled);
+        }
 
-        // Проверете дали потребителят е записан
-        const isEnrolled = signUpListIds.includes(userIdStr);
-        console.log('Is enrolled:', isEnrolled);
-
-
-        res.render('details', { course, user: res.locals.user, isEnrolled });
+        res.render('details', { course, user, isEnrolled });
 
     } catch (error) {
         console.error(error);
