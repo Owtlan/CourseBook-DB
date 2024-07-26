@@ -5,6 +5,35 @@ const { auth, checkNotAuthenticated } = require('../middleware/auth');
 
 
 
+
+router.post('/course/delete/:id', auth, async (req, res) => {
+    try {
+        const courseId = req.params.id;
+        const userId = res.locals.user._id;
+
+        // Find the course by ID
+        const course = await Course.findById(courseId);
+
+        if (!course) {
+            return res.status(404).send('Course not found');
+        }
+      
+        // Check if the logged-in user is the owner of the course
+        if (course.owner.toString() !== userId.toString()) {
+            return res.status(403).send('Unauthorized: You are not the owner of this course');
+        }
+
+        // Delete the course
+        await course.deleteOne();
+
+        // Redirect to the "All Courses" page after deletion
+        res.redirect('/courses');
+    } catch (error) {
+        console.error('Error during course deletion:', error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 router.get('/courses', async (req, res) => {
     try {
         const courses = await Course.find().lean();

@@ -22,7 +22,11 @@
             {{#if user}}
             {{#ifEquals user._id course.owner._id}}
             <a href="/course/edit/{{course._id}}">Edit</a>
-            <a href="/course/delete/{{course._id}}">Delete</a>
+
+            <form action="/course/delete/{{course._id}}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+
             {{else}}
             {{#unless isEnrolled}}
             <form action="/course/signup/{{course._id}}" method="post">
